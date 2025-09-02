@@ -1,6 +1,30 @@
 const express = require('express');
 const app = express();
 
+const helmet = require('helmet');
+
+app.use(helmet({
+  frameguard: {     // configure
+    action: 'deny' 
+  },
+  contentSecurityPolicy: {    // enable and configure
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", 'trusted-cdn.com']
+    }
+  },
+  dnsPrefetchControl: false,  // disable
+  ieNoOpen: true,              // enable with default options
+  noCache: true,                // enable with default options
+  hidePoweredBy: true,        // enable with default options
+  xssFilter: true,          // enable with default options
+  noSniff: true,            // enable with default options
+  hsts: {                   // enable and configure
+    maxAge: 90*24*60*60, // 90 days in seconds
+    force: true
+  }
+
+}));
 
 
 
